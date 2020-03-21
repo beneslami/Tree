@@ -4,7 +4,7 @@
 /*
 TODO list:
 1- implement all of functions for integer data
-   1.1- implement del                         -> done
+   1.1- implement del                         ->
    1.2- implement inorder traversal						-> done
    1.3- implement flush
    1.4- implement preorder traversal
@@ -39,7 +39,7 @@ void flush(tree_t*);
 void *find_min(tree_t*);
 void *find_max(tree_t*);
 void preorder_traversal(tree_t*);
-void inorder_traversal(tree_t*);
+void inorder_traversal(node_t*);
 void postorder_traversal(tree_t*);
 
 #endif

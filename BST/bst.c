@@ -72,7 +72,7 @@ int del(tree_t *tree, void *data){
 			else if(data < node->data){
 				node = node->left;
 			}
-			else if(node == node->data){
+			else if(data == node->data){
 				if(node->left == NULL && node->right == NULL){
 					free(node);
 					return 1;
@@ -107,8 +107,7 @@ int del(tree_t *tree, void *data){
 			}
 			else if(data == node->data){
 				if(node->left == NULL && node->right == NULL){
-					printf("got it\n");
-					node->parent = NULL;
+					node = NULL;
 					free(node);
 					return 1;
 				}
@@ -159,8 +158,8 @@ int del(tree_t *tree, void *data){
 	return -1;
 }
 
-void inorder_traversal(tree_t *tree){
-	node_t *node = tree->root;
+void inorder_traversal(node_t *root){
+	/*node_t *node = tree->root;
 	 node_t *current, *pre;
 
     if (node == NULL){
@@ -188,8 +187,14 @@ void inorder_traversal(tree_t *tree){
                 current = current->right;
             }
         }
-    }
-    printf("\n");
+    }*/
+		if(root->left != NULL){
+			inorder_traversal(root->left);
+		}
+    printf("%d ", (int)root->data);
+		if(root->right != NULL){
+			inorder_traversal(root->right);
+		}
 }
 
 void flush(tree_t *tree){

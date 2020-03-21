@@ -14,9 +14,11 @@ int main(){
 	add(tree, (void*)11);
 	add(tree, (void*)76);
 
-	inorder_traversal(tree);
-	del(tree, (void*)11);
-	inorder_traversal(tree);
+	inorder_traversal(tree->root);
+	printf("\n");
+	del(tree, (void*)76);
+	inorder_traversal(tree->root);
+	printf("\n");
 	flush(tree);
 	return 0;
 }
