@@ -57,7 +57,7 @@ int add(tree_t *tree, void *data){
 	return -1;
 }
 
-int del(node_t *node, void *data){
+int del(node_t *node, void *data){   // incomplete
 
 	if(node == NULL){
 		return -1;
