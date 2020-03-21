@@ -34,12 +34,12 @@ typedef struct tree_{
 
 tree_t *init();
 int add(tree_t*, void*);
-int del(tree_t*, void*);
+int del(node_t*, void*);
 void flush(tree_t*);
 void *find_min(tree_t*);
 void *find_max(tree_t*);
 void preorder_traversal(tree_t*);
 void inorder_traversal(node_t*);
 void postorder_traversal(tree_t*);
-
+node_t *min_value(node_t*);
 #endif

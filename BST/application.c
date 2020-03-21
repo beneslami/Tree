@@ -16,9 +16,9 @@ int main(){
 
 	inorder_traversal(tree->root);
 	printf("\n");
-	del(tree, (void*)76);
+	del(tree->root, (void*)76);
 	inorder_traversal(tree->root);
 	printf("\n");
-	flush(tree);
+
 	return 0;
 }

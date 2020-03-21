@@ -57,146 +57,61 @@ int add(tree_t *tree, void *data){
 	return -1;
 }
 
-int del(tree_t *tree, void *data){
-	node_t *node = tree->root;
+int del(node_t *node, void *data){
+
 	if(node == NULL){
 		return -1;
 	}
-
-	if(data > node->data){//compare with root
-		node = node->right;
-		while(node){
-			if(data > node->data){
-				node = node->right;
-			}
-			else if(data < node->data){
-				node = node->left;
-			}
-			else if(data == node->data){
-				if(node->left == NULL && node->right == NULL){
-					free(node);
-					return 1;
-				}
-				else if(node->left == NULL || node->right == NULL){
-					node_t *temp;
-					if(node->left == NULL){
-						temp = node->right;
-						temp->parent = node->parent;
-						free(node);
-						return 1;
-					}
-					else if(node->right == NULL){
-						temp = node->left;
-						temp->parent = node->parent;
-						free(node);
-						return 1;
-					}
-				}
-			}
-		}
-		printf("Data Not found\n");
-		return -1;}
-	else if(data < node->data){ //compare with root
-		node = node->left;
-		while(node){
-			if(data > node->data){
-				node = node->right;
-			}
-			else if(data < node->data){
-				node = node->left;
-			}
-			else if(data == node->data){
-				if(node->left == NULL && node->right == NULL){
-					node = NULL;
-					free(node);
-					return 1;
-				}
-				else if(node->left == NULL || node->right == NULL){
-					node_t *temp;
-					if(node->left == NULL){
-						temp = node->right;
-						temp->parent = node->parent;
-						free(node);
-						return 1;
-					}
-					else if(node->right == NULL){
-						temp = node->left;
-						temp->parent = node->parent;
-						free(node);
-						return 1;
-					}
-				}
-			}
-		}
-		printf("Data Not found\n");
-		return -1;
+	else if(data < node->data){
+		del(node->left, data);
 	}
-	else if(node->left == NULL && node->right == NULL){ //root has no children
-		free(node);
-		return 1;
+	else if(data > node->data){
+		del(node->right, data);
 	}
-	else if(node->left == NULL || node->right == NULL){ //root has one child
-		node_t *temp;
-		if(node->left == NULL){
-			temp = node->right;
+	else{
+		if(node->left != NULL && node->right != NULL){ // node has two children
+			node_t *temp;
+			temp = min_value(node->right);
 			temp->parent = node->parent;
+			temp->right = node->right;
+			temp->left = node->left;
 			free(node);
-			return 1;
+			return 0;
 		}
-		else if(node->right == NULL){
+		else if(node->left != NULL){ //node has only left child
+			node_t *temp;
 			temp = node->left;
 			temp->parent = node->parent;
 			free(node);
-			return 1;
+			return 0;
 		}
-
+		else if(node->right != NULL){ //node has only right child
+			node_t *temp;
+			temp = node->right;
+			temp->parent = node->parent;
+			free(node);
+			return 0;
+		}
+		else{ //node has no children
+			free(node);
+			return 0;
+		}
 	}
-	else{
-		printf("Something very strange happened\n");
-		return -1;
-	}
-	return -1;
 }
 
-void inorder_traversal(node_t *root){
-	/*node_t *node = tree->root;
-	 node_t *current, *pre;
-
-    if (node == NULL){
-        return;
-    }
-
-    current = node;
-    while (current != NULL) {
-        if (current->left == NULL) {
-            printf("%d ", (int)current->data);
-            current = current->right;
-        }
-        else {
-            pre = current->left;
-            while (pre->right != NULL && pre->right != current){
-                pre = pre->right;
-            }
-            if (pre->right == NULL) {
-                pre->right = current;
-                current = current->left;
-            }
-            else {
-                pre->right = NULL;
-                printf("%d ", (int)current->data);
-                current = current->right;
-            }
-        }
-    }*/
-		if(root->left != NULL){
-			inorder_traversal(root->left);
-		}
-    printf("%d ", (int)root->data);
-		if(root->right != NULL){
-			inorder_traversal(root->right);
-		}
+void inorder_traversal(node_t *root) {
+	if(root->left != NULL){
+		inorder_traversal(root->left);
+	}
+  printf("%d ", (int)root->data);
+	if(root->right != NULL){
+		inorder_traversal(root->right);
+	}
 }
 
-void flush(tree_t *tree){
-
+node_t *min_value(node_t *node){
+	while(node->left != NULL){
+		node = node->left;
+	}
+	return node;
 }
