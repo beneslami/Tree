@@ -57,46 +57,136 @@ int add(tree_t *tree, void *data){
 	return -1;
 }
 
-/*struct node* del(struct node *root, int x) {
-    //searching for the item to be deleted
-    if(root==NULL)
-        return NULL;
-    if (x>root->data)
-        root->right_child = delete(root->right_child, x);
-    else if(x<root->data)
-        root->left_child = delete(root->left_child, x);
-    else
-    {
-        //No Children
-        if(root->left_child==NULL && root->right_child==NULL)
-        {
-            free(root);
-            return NULL;
-        }
+int del(tree_t *tree, void *data){
+	node_t *node = tree->root;
+	if(node == NULL){
+		return -1;
+	}
+	if(data > node->data){
+		node = node->right;
+		while(node){
+			if(data > node->data){
+				node = node->right;
+			}
+			else if(data < node->data){
+				node = node->left;
+			}
+			else if(node == node->data){
+				if(node->left == NULL && node->right == NULL){
+					free(node);
+					return 1;
+				}
+				else if(node->left == NULL || node->right == NULL){
+					node_t *temp;
+					if(node->left == NULL){
+						temp = node->right;
+						temp->parent = node->parent;
+						free(node);
+						return 1;
+					}
+					else if(node->right == NULL){
+						temp = node->left;
+						temp->parent = node->parent;
+						free(node);
+						return 1;
+					}
+				}
+			}
+		}
+		printf("Data Not found\n");
+	}
+	else if(data < node->data){
+		node = node->left;
+		while(node){
+			if(data > node->data){
+				node = node->right;
+			}
+			else if(data < node->data){
+				node = node->left;
+			}
+			else if(node == node->data){
+				if(node->left == NULL && node->right == NULL){
+					free(node);
+					return 1;
+				}
+				else if(node->left == NULL || node->right == NULL){
+					node_t *temp;
+					if(node->left == NULL){
+						temp = node->right;
+						temp->parent = node->parent;
+						free(node);
+						return 1;
+					}
+					else if(node->right == NULL){
+						temp = node->left;
+						temp->parent = node->parent;
+						free(node);
+						return 1;
+					}
+				}
+			}
+		}
+		printf("Data Not found\n");
+	}
+	else if(node->left == NULL && node->right == NULL){ //root has no children
+		free(node);
+		return 1;
+	}
+	else if(node->left == NULL || node->right == NULL){ //root has one child
+		node_t *temp;
+		if(node->left == NULL){
+			temp = node->right;
+			temp->parent = node->parent;
+			free(node);
+			return 1;
+		}
+		else if(node->right == NULL){
+			temp = node->left;
+			temp->parent = node->parent;
+			free(node);
+			return 1;
+		}
 
-        //One Child
-        else if(root->left_child==NULL || root->right_child==NULL)
-        {
-            struct node *temp;
-            if(root->left_child==NULL)
-                temp = root->right_child;
-            else
-                temp = root->left_child;
-            free(root);
-            return temp;
-        }
+	}
+	else{
+		printf("Something very strange happened\n");
+		return -1;
+	}
+	return -1;
+}
 
-        //Two Children
-        else
-        {
-            struct node *temp = find_minimum(root->right_child);
-            root->data = temp->data;
-            root->right_child = delete(root->right_child, temp->data);
+void inorder_traversal(tree_t *tree){
+	node_t *node = tree->root;
+	 node_t *current, *pre; 
+  
+    if (node == NULL){
+        return; 
+    }
+  
+    current = node; 
+    while (current != NULL) { 
+        if (current->left == NULL) { 
+            printf("%d ", (int)current->data); 
+            current = current->right; 
+        } 
+        else { 
+            pre = current->left; 
+            while (pre->right != NULL && pre->right != current){
+                pre = pre->right; 
+            }
+            if (pre->right == NULL) { 
+                pre->right = current; 
+                current = current->left; 
+            } 
+            else { 
+                pre->right = NULL; 
+                printf("%d ", (int)current->data); 
+                current = current->right; 
+            }
         }
     }
-    return root;
-}*/
-
+    printf("\n");
+}
 void flush(tree_t *tree){
 
 }

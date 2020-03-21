@@ -4,8 +4,8 @@
 /*
 TODO list:
 1- implement all of functions for integer data
-   1.1- implement del
-   1.2- implement inorder traversal
+   1.1- implement del                         -> done
+   1.2- implement inorder traversal						-> done
    1.3- implement flush
    1.4- implement preorder traversal
    1.5- implement postorder traversal
@@ -25,7 +25,7 @@ typedef struct node_{
 	struct node_ *left;
 	struct node_ *right;
 	struct node_ *parent;
-	
+
 }node_t;
 
 typedef struct tree_{
