@@ -3,7 +3,7 @@
 #include "bst.h"
 
 tree_t *init(){
-	tree_t *tree = calloc(1, sizeof(tree_t)); 
+	tree_t *tree = calloc(1, sizeof(tree_t));
 	node_t *node = calloc(1, sizeof(node_t));
 	node->left = NULL;
 	node->right = NULL;
@@ -22,7 +22,7 @@ int add(tree_t *tree, void *data){
 	while(node){
 		if(node->data > data){
 			if(node->left){
-				node = node->left;	
+				node = node->left;
 			}
 			else{
 				node_t *item = calloc(1, sizeof(node_t));
@@ -33,11 +33,11 @@ int add(tree_t *tree, void *data){
 				item->parent = node;
 				return 0;
 			}
-			
+
 		}
 		else if(node->data < data){
 			if(node->right){
-				node = node->right;	
+				node = node->right;
 			}
 			else{
 				node_t *item = calloc(1, sizeof(node_t));
@@ -62,7 +62,8 @@ int del(tree_t *tree, void *data){
 	if(node == NULL){
 		return -1;
 	}
-	if(data > node->data){
+
+	if(data > node->data){//compare with root
 		node = node->right;
 		while(node){
 			if(data > node->data){
@@ -94,8 +95,8 @@ int del(tree_t *tree, void *data){
 			}
 		}
 		printf("Data Not found\n");
-	}
-	else if(data < node->data){
+		return -1;}
+	else if(data < node->data){ //compare with root
 		node = node->left;
 		while(node){
 			if(data > node->data){
@@ -104,8 +105,10 @@ int del(tree_t *tree, void *data){
 			else if(data < node->data){
 				node = node->left;
 			}
-			else if(node == node->data){
+			else if(data == node->data){
 				if(node->left == NULL && node->right == NULL){
+					printf("got it\n");
+					node->parent = NULL;
 					free(node);
 					return 1;
 				}
@@ -127,6 +130,7 @@ int del(tree_t *tree, void *data){
 			}
 		}
 		printf("Data Not found\n");
+		return -1;
 	}
 	else if(node->left == NULL && node->right == NULL){ //root has no children
 		free(node);
@@ -157,39 +161,37 @@ int del(tree_t *tree, void *data){
 
 void inorder_traversal(tree_t *tree){
 	node_t *node = tree->root;
-	 node_t *current, *pre; 
-  
+	 node_t *current, *pre;
+
     if (node == NULL){
-        return; 
+        return;
     }
-  
-    current = node; 
-    while (current != NULL) { 
-        if (current->left == NULL) { 
-            printf("%d ", (int)current->data); 
-            current = current->right; 
-        } 
-        else { 
-            pre = current->left; 
+
+    current = node;
+    while (current != NULL) {
+        if (current->left == NULL) {
+            printf("%d ", (int)current->data);
+            current = current->right;
+        }
+        else {
+            pre = current->left;
             while (pre->right != NULL && pre->right != current){
-                pre = pre->right; 
+                pre = pre->right;
             }
-            if (pre->right == NULL) { 
-                pre->right = current; 
-                current = current->left; 
-            } 
-            else { 
-                pre->right = NULL; 
-                printf("%d ", (int)current->data); 
-                current = current->right; 
+            if (pre->right == NULL) {
+                pre->right = current;
+                current = current->left;
+            }
+            else {
+                pre->right = NULL;
+                printf("%d ", (int)current->data);
+                current = current->right;
             }
         }
     }
     printf("\n");
 }
+
 void flush(tree_t *tree){
 
 }
-
-
-

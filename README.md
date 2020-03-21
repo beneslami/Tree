@@ -1,4 +1,5 @@
 # Tree
 different implementations of Tree based data structures
 
-* BST
+## BST
+* inorder traversal is not stack based, therefore, no extra space is required

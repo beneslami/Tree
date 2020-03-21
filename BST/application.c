@@ -15,6 +15,8 @@ int main(){
 	add(tree, (void*)76);
 
 	inorder_traversal(tree);
+	del(tree, (void*)11);
+	inorder_traversal(tree);
 	flush(tree);
 	return 0;
 }
