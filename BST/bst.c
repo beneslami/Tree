@@ -15,7 +15,7 @@ tree_t *init(){
 
 int add(tree_t *tree, void *data){
 	node_t *node = tree->root;
-	if(node->left != NULL && node->right != NULL){ //first node
+	if(!node->data){ //first node
 		node->data = data;
 		return 0;
 	}
@@ -66,14 +66,16 @@ node_t *del(node_t *node){   // incomplete
 
 	}
 	else if(node->left != NULL){ //node has only left child
-		node_t *temp = node->right;
-		free(node);
-		return temp;
+		node_t *temp = node;
+		node = node->left;
+		free(temp);
+		return node;
 	}
 	else if(node->right != NULL){ //node has only right child
-		node_t *temp = node->right;
-		free(node);
-		return temp;
+		node_t *temp = node;
+		node = node->right;
+		free(temp);
+		return node;
 	}
 	else{ //node has no children
 		free(node);

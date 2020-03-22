@@ -21,6 +21,6 @@ int main(){
 	printf("%d\n", (int)temp->data);
 	postorder_traversal(tree->root);
 	printf("\n");
-	deinit(tree->root);
+	//deinit(tree->root);
 	return 0;
 }
