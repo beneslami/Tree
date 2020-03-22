@@ -4,9 +4,9 @@
 /*
 TODO list:
 1- implement all of functions for integer data
-   1.1- implement del                         -> done
+   1.1- implement del                         -> problem
    1.2- implement inorder traversal						-> done
-   1.3- implement deinit
+   1.3- implement deinit											-> problem
    1.4- implement preorder traversal          -> done
    1.5- implement postorder traversal					-> done
    1.6- implement find_min										-> done
@@ -27,14 +27,9 @@ typedef struct node_{
 
 }node_t;
 
-typedef struct tree_{
-	node_t *root;
-}tree_t;
-
-tree_t *init();
+node_t *init();
 int add(node_t*, void*);
-int del(node_t*);
-void flush(tree_t*);
+int del(node_t*, void*);
 node_t *min_value(node_t*);
 node_t *max_value(node_t*);
 void preorder_traversal(node_t*);

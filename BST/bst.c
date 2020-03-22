@@ -2,19 +2,19 @@
 #include <stdlib.h>
 #include "bst.h"
 
-tree_t *init(){
-	tree_t *tree = calloc(1, sizeof(tree_t));
+node_t *init(){
+
 	node_t *node = calloc(1, sizeof(node_t));
 	node->left = NULL;
 	node->right = NULL;
 	node->data = NULL;
-	tree->root = node;
-	return tree;
+	return node;
 }
 
 int add(node_t *node, void *data){
 	if(node->data == NULL){ //first time when there is only root node exists
 		node->data = data;
+		printf("%d -> %p\n",node->data, node);
 		return 0;
 	}
 	node_t *prev = NULL, *ptr;
@@ -37,6 +37,7 @@ int add(node_t *node, void *data){
 		node->left = NULL;
 		node->right = NULL;
 		prev->left = node;
+		printf("%d -> %p\n", node->data, node);
 		return 1;
 	}
 	else if(type == 'r'){
@@ -45,33 +46,48 @@ int add(node_t *node, void *data){
 		node->left = NULL;
 		node->right = NULL;
 		prev->right = node;
+		printf("%d -> %p\n", node->data, node);
 		return 1;
 	}
 	return -1;
 }
 
-int del(node_t *node){
+int del(node_t *node, void* data){
 
-	if(node->left == NULL && node->right == NULL){
-		free(node);
-	}
+	while(1){
+		if(data < node->data){
+			node = node->left;
+		}
+		else if(data > node->data){
+			node = node->right;
+		}
+		else if (data == node->data){
+			if(node->left == NULL && node->right == NULL){
+				printf("%p\n", node);
+				free(node);
+				break;
+			}
+			else if(node->left != NULL){ //node has only left child
+				node->data = node->left->data;
+				printf("%p\n", node->left);
+				free(node->left);
+				break;
+			}
+			else if(node->right != NULL){ //node has only right child
+				node->data = node->right->data;
+				printf("%p\n", node->right);
+				free(node->right);
+				break;
+			}
 
-	else if(node->left != NULL){ //node has only left child
-		node_t *temp = node;
-		node = node->left;
-		free(temp);
-	}
-
-	else if(node->right != NULL){ //node has only right child
-		node_t *temp = node;
-		node = node->right;
-		free(temp);
-	}
-
-	else if(node->left != NULL && node->right != NULL){ // node has two children
-		node_t *temp = min_value(node->right);
-		node->data = temp->data;
-		free(temp);
+			else if(node->left != NULL && node->right != NULL){ // node has two children
+				node_t *temp = min_value(node->right);
+				node->data = temp->data;
+				printf("%p\n", temp);
+				free(temp);
+				break;
+			}
+		}
 	}
 	return 0;
 }

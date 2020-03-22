@@ -2,23 +2,22 @@
 #include <stdlib.h>
 #include "bst.h"
 
-tree_t *tree;
+node_t *tree;
 
 int main(){
 	tree = init();
-	add(tree->root, (void*)40);
-	add(tree->root, (void*)10);
-	add(tree->root, (void*)30);
-	add(tree->root, (void*)25);
-	add(tree->root, (void*)50);
-	add(tree->root, (void*)11);
-	add(tree->root, (void*)76);
+	add(tree, (void*)40);
+	add(tree, (void*)10);
+	add(tree, (void*)30);
+	add(tree, (void*)25);
+	add(tree, (void*)50);
+	add(tree, (void*)11);
+	add(tree, (void*)76);
 
-	preorder_traversal(tree->root);
+	preorder_traversal(tree);
 	printf("\n");
-	node_t *node = find(tree->root, (void*)25);
-	printf("%d\n", node->left->data);
-	preorder_traversal(tree->root);
+	del(tree, (void*)30);
+	preorder_traversal(tree);
 	printf("\n");
 	//deinit(tree->root);
 	return 0;
