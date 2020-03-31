@@ -16,7 +16,6 @@ node_t *init(){
 int add(node_t *node, void *data){
 	if(node->data == NULL){ //first time when there is only root node exists
 		node->data = data;
-		printf("%d -> %p\n",(int)node->data, node);
 		return 0;
 	}
 	node_t *prev = NULL, *ptr;
@@ -39,7 +38,6 @@ int add(node_t *node, void *data){
 		node->left = NULL;
 		node->right = NULL;
 		prev->left = node;
-		printf("%d -> %p\n", (int)node->data, node);
 		return 1;
 	}
 	else if(type == 'r'){
@@ -48,7 +46,6 @@ int add(node_t *node, void *data){
 		node->left = NULL;
 		node->right = NULL;
 		prev->right = node;
-		printf("%d -> %p\n", (int)node->data, node);
 		return 1;
 	}
 	return -1;
@@ -184,9 +181,9 @@ node_t *find(node_t *node, void* data){
 }
 
 void deinit(node_t *root){
-	if(root == NULL) return;
-	deinit(root->left);
-	deinit(root->right);
-	free(root);
+	if(root->left != NULL)
+		deinit(root->left);
+	if(root->right != NULL)
+		deinit(root->right);
 	free(root);
 }

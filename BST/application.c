@@ -18,17 +18,11 @@ int main(){
 	add(tree, (void*)41);
 	add(tree, (void*)45);
 	add(tree, (void*)73);
-	add(tree, (void*)77);
+	add(tree, (void*)78);
 	add(tree, (void*)11);
 	add(tree, (void*)33);
 	add(tree, (void*)20);
-	add(tree, (void*)78);
-
-	inorder_traversal(tree);
-	printf("\n");
-	del(tree, (void*)30);
-	inorder_traversal(tree);
-	printf("\n");
-	//deinit(tree->root);
+	add(tree, (void*)77);
+	
 	return 0;
 }
