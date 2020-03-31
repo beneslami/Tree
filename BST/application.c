@@ -23,6 +23,5 @@ int main(){
 	add(tree, (void*)33);
 	add(tree, (void*)20);
 	add(tree, (void*)77);
-	
 	return 0;
 }

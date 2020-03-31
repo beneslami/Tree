@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include "bst.h"
 
+struct node_{
+	void *data;
+	struct node_ *left;
+	struct node_ *right;
+
+};
 node_t *before;
 
 node_t *init(){
