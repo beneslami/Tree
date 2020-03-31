@@ -4,7 +4,7 @@
 /*
 TODO list:
 1- implement all of functions for integer data
-   1.1- implement del                         -> problem
+   1.1- implement del                         -> done
    1.2- implement inorder traversal						-> done
    1.3- implement deinit											-> problem
    1.4- implement preorder traversal          -> done

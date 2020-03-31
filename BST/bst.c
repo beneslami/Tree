@@ -58,13 +58,11 @@ int del(node_t *node, void* data){
 
 	if(data < node->data){
 		before = node;
-		printf("%d\n", before->data);
 		del(node->left, data);
 	}
 
 	else if(data > node->data){
 		before = node;
-		printf("%d\n", before->data);
 		del(node->right, data);
 	}
 
@@ -74,7 +72,7 @@ int del(node_t *node, void* data){
 			return 0;
 		}
 
-		else if(node->left != NULL) {       //node has only left child
+		else if(node->left != NULL && node->right == NULL) {       //node has only left child
 			if(before->right == node){
 				before->right = node->left;
 				free(node);
@@ -87,7 +85,7 @@ int del(node_t *node, void* data){
 			}
 		}
 
-		else if(node->right != NULL){     //node has only right child
+		else if(node->right != NULL && node->left == NULL){        //node has only right child
 			if(before->left == node){
 				before->left = node->right;
 				free(node);
@@ -100,11 +98,20 @@ int del(node_t *node, void* data){
 			}
 		}
 
-		else if(node->left != NULL && node->right != NULL){ // node has two children
+		else if(node->left != NULL && node->right != NULL){        // node has two children
 			node_t *temp = min_value(node->right);
-			node->data = temp->data;
-			del(node->right, data);
-			return 0;
+			if(before->left == node){
+					temp->left = node->left;
+					before->left = temp;
+					free(node);
+					return 0;
+			}
+			else if(before->right == node){
+					temp->left = node->left;
+					before->right = temp;
+					free(node);
+					return 0;
+			}
 		}
 	}
 	else{

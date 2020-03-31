@@ -17,7 +17,7 @@ int main(){
 	add(tree, (void*)30);
 	add(tree, (void*)41);
 	add(tree, (void*)45);
-	//add(tree, (void*)73);
+	add(tree, (void*)73);
 	add(tree, (void*)77);
 	add(tree, (void*)11);
 	add(tree, (void*)33);
@@ -26,7 +26,7 @@ int main(){
 
 	inorder_traversal(tree);
 	printf("\n");
-	del(tree, (void*)77);
+	del(tree, (void*)30);
 	inorder_traversal(tree);
 	printf("\n");
 	//deinit(tree->root);
