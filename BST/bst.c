@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "bst.h"
 
+node_t *before;
+
 node_t *init(){
 
 	node_t *node = calloc(1, sizeof(node_t));
@@ -14,7 +16,7 @@ node_t *init(){
 int add(node_t *node, void *data){
 	if(node->data == NULL){ //first time when there is only root node exists
 		node->data = data;
-		printf("%d -> %p\n",node->data, node);
+		printf("%d -> %p\n",(int)node->data, node);
 		return 0;
 	}
 	node_t *prev = NULL, *ptr;
@@ -37,7 +39,7 @@ int add(node_t *node, void *data){
 		node->left = NULL;
 		node->right = NULL;
 		prev->left = node;
-		printf("%d -> %p\n", node->data, node);
+		printf("%d -> %p\n", (int)node->data, node);
 		return 1;
 	}
 	else if(type == 'r'){
@@ -46,7 +48,7 @@ int add(node_t *node, void *data){
 		node->left = NULL;
 		node->right = NULL;
 		prev->right = node;
-		printf("%d -> %p\n", node->data, node);
+		printf("%d -> %p\n", (int)node->data, node);
 		return 1;
 	}
 	return -1;
@@ -54,51 +56,72 @@ int add(node_t *node, void *data){
 
 int del(node_t *node, void* data){
 
-	while(1){
-		if(data < node->data){
-			node = node->left;
-		}
-		else if(data > node->data){
-			node = node->right;
-		}
-		else if (data == node->data){
-			if(node->left == NULL && node->right == NULL){
-				printf("%p\n", node);
-				free(node);
-				break;
-			}
-			else if(node->left != NULL){ //node has only left child
-				node->data = node->left->data;
-				printf("%p\n", node->left);
-				free(node->left);
-				break;
-			}
-			else if(node->right != NULL){ //node has only right child
-				node->data = node->right->data;
-				printf("%p\n", node->right);
-				free(node->right);
-				break;
-			}
+	if(data < node->data){
+		before = node;
+		printf("%d\n", before->data);
+		del(node->left, data);
+	}
 
-			else if(node->left != NULL && node->right != NULL){ // node has two children
-				node_t *temp = min_value(node->right);
-				node->data = temp->data;
-				printf("%p\n", temp);
-				free(temp);
-				break;
+	else if(data > node->data){
+		before = node;
+		printf("%d\n", before->data);
+		del(node->right, data);
+	}
+
+	else if (data == node->data){
+		if(node->left == NULL && node->right == NULL){   // leaf node
+			free(node);
+			return 0;
+		}
+
+		else if(node->left != NULL) {       //node has only left child
+			if(before->right == node){
+				before->right = node->left;
+				free(node);
+				return 0;
 			}
+			else if(before->left == node){
+				before->left = node->left;
+				free(node);
+				return 0;
+			}
+		}
+
+		else if(node->right != NULL){     //node has only right child
+			if(before->left == node){
+				before->left = node->right;
+				free(node);
+				return 0;
+			}
+			else if(before->right == node){
+				before->right = node->right;
+				free(node);
+				return 0;
+			}
+		}
+
+		else if(node->left != NULL && node->right != NULL){ // node has two children
+			node_t *temp = min_value(node->right);
+			node->data = temp->data;
+			del(node->right, data);
+			return 0;
 		}
 	}
-	return 0;
+	else{
+		printf("data does not exist\n");
+		return -1;
+	}
+	return -1;
 }
 
 void preorder_traversal(node_t *root){
+
 	printf("%d ", (int)root->data);
 	if(root->left != NULL){
-		inorder_traversal(root->left);
+		preorder_traversal(root->left);
 	}
 	if(root->right != NULL){
-		inorder_traversal(root->right);
+		preorder_traversal(root->right);
 	}
 }
 
@@ -114,10 +137,10 @@ void inorder_traversal(node_t *root) {
 
 void postorder_traversal(node_t *root){
 	if(root->left != NULL){
-		inorder_traversal(root->left);
+		postorder_traversal(root->left);
 	}
 	if(root->right != NULL){
-		inorder_traversal(root->right);
+		postorder_traversal(root->right);
 	}
 	printf("%d ", (int)root->data);
 }

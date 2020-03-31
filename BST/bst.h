@@ -13,7 +13,7 @@ TODO list:
    1.7- implement find_max										-> done
 2- change structures and modify it as opaque pointers
 3- change entire header file to a generic tree
-   3.1- voiding data
+   3.1- voiding data													-> done
    3.2- implement allback function for add
    3.3- implement allback function for del
    3.4- implement allback function for find_min
